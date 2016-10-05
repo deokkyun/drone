@@ -6,12 +6,13 @@
 
 #define DEFAULT_SEAPRESSURE 1013.5
 #include "../filters.h"
+#include "../../singleton.hpp"
 
 class MPU6050;
 class HMC5883L;
 class MS5611;
 using namespace std;
-class RPIGY86 {
+class RPIGY86 : public singleton<RPIGY86>{
 
 public:
     RPIGY86();

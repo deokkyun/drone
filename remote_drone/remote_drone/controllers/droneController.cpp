@@ -1,10 +1,12 @@
-#include "DroneController.h"
+#include "droneController.h"
 
 using namespace std;
 
 
 // default setting
 DroneController::DroneController() {
+	current_command = commandType::stop;
+	
 	PWM[droneControlType::throttle][dronePWM::current] = PWM[droneControlType::throttle][dronePWM::min] = 1000;
 	PWM[droneControlType::throttle][dronePWM::neutral] = 1020;
 	PWM[droneControlType::throttle][dronePWM::max] = 2000;
@@ -27,8 +29,8 @@ DroneController::DroneController() {
 	pwm_percentage[droneControlType::roll] = 50;
 	pwm_percentage[droneControlType::yaw] = 50;
 
-	deadband[droneControlType::throttle][MIN] = 30;
-	deadband[droneControlType::throttle][MAX] = 80;
+	deadband[droneControlType::throttle][MIN] = 33;
+	deadband[droneControlType::throttle][MAX] = 75;
 	deadband[droneControlType::pitch][MIN] = 30;
 	deadband[droneControlType::pitch][MAX] = 70;
 	deadband[droneControlType::roll][MIN] = 30;
@@ -37,6 +39,7 @@ DroneController::DroneController() {
 	deadband[droneControlType::yaw][MAX] = 70;
 
 	is_using_deadband = true;
+
 
 	pwm_gap_calc();
 	is_permit = false;
@@ -143,7 +146,7 @@ short DroneController::map(float percent, droneControlType::Enum controlType)
 
 }
 
-void DroneController::start()
+void DroneController::start_drone()
 {
 	PWM[droneControlType::throttle][dronePWM::current] = PWM[droneControlType::throttle][dronePWM::min];
 	PWM[droneControlType::yaw][dronePWM::current] = PWM[droneControlType::yaw][dronePWM::neutral];
@@ -168,4 +171,32 @@ void DroneController::stop_drone()
 	pwm_percentage[droneControlType::pitch] = 50;
 	pwm_percentage[droneControlType::roll] = 50;
 	pwm_percentage[droneControlType::yaw] = 50;
+}
+
+void  DroneController::order(commandType::Enum command)
+{
+	switch (command) {
+	case commandType::stop:
+		stop_drone();
+		break;
+	case commandType::start:
+		start_drone();
+		break;
+	case commandType::pause:
+
+		break;
+	case commandType::move:
+
+		break;
+	case commandType::landing:
+
+		break;
+
+	}
+	current_command = command;
+}
+
+commandType::Enum DroneController::get_command()
+{
+	return commandType::Enum(current_command);
 }

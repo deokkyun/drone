@@ -50,6 +50,7 @@ public:
 	double nonsave_step(double value);
 	void save_value(double value);
 	void save_value(double value, double average);
+	double get_variance();
 
 	void set_buffer_size(unsigned short buffer_size);
 	unsigned short get_buffer_size();

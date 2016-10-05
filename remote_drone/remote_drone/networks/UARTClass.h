@@ -50,6 +50,7 @@ class UARTClass : public singleton<UARTClass> {
       void SendSerial( string msg );
       void loop(); // getMessage from Arduino
       void startCommunicate();
+	  void clear();
       
       string getMsg();	  
 };

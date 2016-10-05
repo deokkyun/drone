@@ -88,6 +88,9 @@
     <ClCompile Include="sensors\filters.cpp">
       <Filter>sensors</Filter>
     </ClCompile>
+    <ClCompile Include="controllers\altitudeController.cpp">
+      <Filter>controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="networks\ClientSocket.h">
@@ -234,6 +237,9 @@
     </ClInclude>
     <ClInclude Include="rapidjson\msinttypes\stdint.h">
       <Filter>rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="controllers\altitudeController.h">
+      <Filter>controllers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

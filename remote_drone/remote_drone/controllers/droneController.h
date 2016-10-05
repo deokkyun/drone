@@ -36,6 +36,7 @@ private:
 	bool is_permit,is_using_deadband;
 	char deadband[4][2];
 	mutex mutex_pwm[4];
+	unsigned char current_command;
 private:
 	/*template<typename type>
 	type constrain(type value, type min, type max);
@@ -43,6 +44,9 @@ private:
 	double constrain(double percent, droneControlType::Enum controlType);
 	short map(float percent, droneControlType::Enum controlType);
 	void pwm_gap_calc();
+
+	void start_drone();
+	void stop_drone();
 public:
 	DroneController();
 	//back < 50(neutral) < front
@@ -56,9 +60,12 @@ public:
 	float get_pwm_percentage(droneControlType::Enum controlType);
 	short get_pwm(droneControlType::Enum controlType);
 	string get_pwm_string();
+
+	
+
 public:
-	void start();
-	void stop_drone();
+	void order(commandType::Enum command);
+	commandType::Enum get_command();
 
 };
 

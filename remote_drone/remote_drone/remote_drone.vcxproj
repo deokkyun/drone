@@ -53,6 +53,7 @@
     </RemotePostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="controllers\altitudeController.cpp" />
     <ClCompile Include="controllers\droneController.cpp" />
     <ClCompile Include="controllers\landingController.cpp" />
     <ClCompile Include="controllers\pid.cpp" />
@@ -74,6 +75,7 @@
     <ClCompile Include="sensors\sonar\ultrasonic.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="controllers\altitudeController.h" />
     <ClInclude Include="controllers\droneController.h" />
     <ClInclude Include="controllers\landingController.h" />
     <ClInclude Include="controllers\pid.h" />
@@ -129,7 +131,7 @@
       <AdditionalOptions>-lunistd %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-pthread --std=c++11 -DRaspberryPi %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-pthread --std=c++11 -DRaspberryPi -g -ggdb %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

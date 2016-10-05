@@ -77,6 +77,16 @@ void MAF::save_value(double value,double average)
 	if (index >= buffer_size) { index = 0; }
 }
 
+double MAF::get_variance()
+{
+	double var = 0;
+	for (int i = 0; i < buffer_size; i++) {
+		var += buffer[i] - average;
+	}
+	
+	return var;
+}
+
 void MAF::set_buffer_size(unsigned short buffer_size)
 {
 	if (this->buffer_size == buffer_size || buffer_size < 2) {

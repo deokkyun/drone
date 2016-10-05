@@ -9,7 +9,7 @@
 LandingController::LandingController()
 {
 	is_working = false;
-	setPoint = 250;
+	setPoint = 5;
 	_1st_pid = new PID(0.02, 0.0002, 0.01, -0.4, 1, 0.05);	//
 	_2nd_pid = new PID(0.1, 0, 0, -1, 1, 0.001);	// 
 	drone = DroneController::getInstance();
@@ -46,7 +46,7 @@ void LandingController::calculate() {
 			}
 
 			if (distance < 10) {
-				drone->stop_drone();
+				drone->order(commandType::stop);
 				is_working = false;
 				break;
 			}

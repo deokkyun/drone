@@ -164,3 +164,8 @@ void UARTClass::startCommunicate() {
    thread t([&]() { while(true) { loop(); } } );
    t.detach();
 }
+
+void UARTClass::clear()
+{
+	message = "";
+}

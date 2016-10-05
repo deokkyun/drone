@@ -52,18 +52,27 @@ void RPIGY86::initialize()
     mpu6050 = new MPU6050();
     hmc5883l = new HMC5883L();
     ms5611 = new MS5611();
+	mpu6050->initialize();
+	mpu6050->setI2CBypassEnabled(true);
+	hmc5883l->initialize();
+	ms5611->begin();
 
 	seaLevelPressure = DEFAULT_SEAPRESSURE;
 
-	maf_altitude = new MAF(0, 5);
-	maf_pressure = new MAF(1010, 5);
-	maf_temperature = new MAF(20, 5);	
+	float tem_press = ms5611->readPressure()*0.01;
+	while(tem_press == 0){ tem_press=ms5611->readPressure()*0.01; }
+	float tem_temperature = ms5611->readTemperature();
+	float temp_alt = (((pow((seaLevelPressure / tem_press), 0.1902949f) - 1.0) * (tem_temperature + 273.15)) / 0.0065f
+		);
+
+	
+	maf_altitude = new MAF(temp_alt, 5);
+	maf_pressure = new MAF(tem_press, 5);
+
+	maf_temperature = new MAF(tem_temperature, 5);
 	skalman_altitude = new simpleKfilter(1, 0, 0.1, 0.05, 0.05);
 
-    mpu6050->initialize();
-    mpu6050->setI2CBypassEnabled(true);
-    hmc5883l->initialize();
-    ms5611->begin();
+   
 }
 
 RPIGY86::~RPIGY86()
@@ -315,12 +324,12 @@ float RPIGY86::getAltitude() {
 	altitude = maf_altitude->step(skalman_altitude->step(
 		((pow((seaLevelPressure / pressure), 0.1902949f) - 1.0) * (temperature + 273.15)) / 0.0065f
 	));
-	unsigned int time_gap = millis() - timer_climb;
-	if(time_gap >0 ){
-		rate_climb = (altitude - prev_altitude) / (1000 / time_gap);
-		timer_climb = millis();
-		prev_altitude = altitude;
-	}
+	//unsigned int time_gap = millis() - timer_climb;
+	//if(time_gap >0 ){
+	//	rate_climb = (altitude - prev_altitude) / (1000 / time_gap);
+	//	timer_climb = millis();
+	//	prev_altitude = altitude;
+	//}
 	
 	return (float)altitude;;
 }
@@ -335,6 +344,6 @@ float RPIGY86::getTemperature() {
 	return (float)temperature;
 }	
 
-float RPIGY86::getRateClimb() {
-	return (float)rate_climb;
-}
+//float RPIGY86::getRateClimb() {
+//	return (float)rate_climb;
+//}
