@@ -29,7 +29,7 @@ DroneController::DroneController() {
 	pwm_percentage[droneControlType::roll] = 50;
 	pwm_percentage[droneControlType::yaw] = 50;
 
-	deadband[droneControlType::throttle][MIN] = 33;
+	deadband[droneControlType::throttle][MIN] = 45;
 	deadband[droneControlType::throttle][MAX] = 75;
 	deadband[droneControlType::pitch][MIN] = 30;
 	deadband[droneControlType::pitch][MAX] = 70;

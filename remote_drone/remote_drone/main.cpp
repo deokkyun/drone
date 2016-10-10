@@ -99,14 +99,14 @@ void RecvFromWeb() {
 
 						case 3:
 							cout << "!------------ landing ------------!" << endl;
-							altiController->set_altitude(0);
+							altiController->set_altitude(-0.5);
 							drone->order(commandType::landing);
 							//posController->stop();
 							break;
 
 						case 4:
 							cout << "!------------ gps 좌표 이동 ------------!" << endl;
-							altiController->set_altitude(1.1);
+							altiController->set_altitude(0.4);
 							
 							is_takeoff = true;
 														// 3. 고도 설정
